@@ -24,7 +24,7 @@ public class Etudiant {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<Etudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","tp","secret");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select*from Etudiant"); 
             while(rs.next())
@@ -55,6 +55,35 @@ public class Etudiant {
             
         return list;
     }
+
+
+    
+    public void insertEcolage(String annee, String mois,String date,String montant,String niv,String id) throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    {
+
+        ArrayList list =  null;
+        Connection connection = null;
+        Statement stmt = null;
+        String sql = null;
+        try {
+            Class.forName("org.postgresql.Driver").newInstance();
+            list =  new ArrayList<Etudiant>();
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
+            stmt = connection.createStatement();
+            sql = "insert into EcolageEtudiant (id,idetudiant,montant,datee,mois,annee,idniveau) values (nextval('eco'),"+ id +","+montant+",'"+date+"',"+mois+","+annee+","+niv+")";
+            
+            stmt.execute(sql); 
+
+        } catch (Exception e) {
+            //TODO: handle exception
+            throw e;
+        } finally{
+            
+            stmt.close();
+            connection.close();
+        }
+    }
+
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
