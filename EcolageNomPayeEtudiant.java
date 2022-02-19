@@ -22,7 +22,7 @@ public class EcolageNomPayeEtudiant {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<EcolageNomPayeEtudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","tp","secret");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select EcolageEtudiant.id id,Etudiant.etu etu,Etudiant.idpromotion idprom,Promotion.nom nomP,(niveau.ecolage - EcolageEtudiant.montant) reste,date_part("+"'month'"+",now()) mois,date_part("+"'year'"+",now()) annee,Etudiant.idNiveau idN,niveau.nom niv from EcolageEtudiant join Etudiant on EcolageEtudiant.idEtudiant = Etudiant.id join niveau on Etudiant.idNiveau = niveau.id join Promotion on Promotion.id = Etudiant.idpromotion");
             
@@ -68,7 +68,7 @@ public class EcolageNomPayeEtudiant {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<EcolageNomPayeEtudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","tp","secret");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
             stmt = connection.createStatement();
             String sql = "select*from (select EcolageEtudiant.id id,Etudiant.etu etu,Etudiant.idpromotion idprom,Promotion.nom nomP,(niveau.ecolage - EcolageEtudiant.montant) reste,date_part('month',EcolageEtudiant.datee) mois,date_part('year',EcolageEtudiant.datee) annee,Etudiant.idNiveau idN,niveau.nom niv from EcolageEtudiant join Etudiant on EcolageEtudiant.idEtudiant = Etudiant.id join niveau on Etudiant.idNiveau = niveau.id join Promotion on Promotion.id = Etudiant.idpromotion) as liste where liste.idN ="+ id +" and liste.annee ="+annee+" and liste.mois="+mois+" and liste.nomP='"+prom+"'";
             rs = stmt.executeQuery(sql);

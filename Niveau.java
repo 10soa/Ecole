@@ -16,7 +16,7 @@ public class Niveau {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<Niveau>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","tp","secret");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select*from Niveau"); 
             while(rs.next())

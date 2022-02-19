@@ -5,7 +5,7 @@ public class Promotion {
     String nom;
     int statut;
 
-    ArrayList<Promotion> getProm() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    ArrayList<Promotion> gepostgresrom() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
     {
 
         ArrayList list =  null;
@@ -15,7 +15,7 @@ public class Promotion {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<Promotion>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","tp","secret");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select*from promotion where statut=0"); 
             while(rs.next())
