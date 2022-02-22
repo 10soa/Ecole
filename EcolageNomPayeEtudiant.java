@@ -1,5 +1,8 @@
+package direction;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.InvalidPropertiesFormatException;
 import java.util.List;
 public class EcolageNomPayeEtudiant {
     int id;
@@ -12,7 +15,7 @@ public class EcolageNomPayeEtudiant {
     int idN;
     String niv;
 
-    ArrayList<EcolageNomPayeEtudiant> listeMoisActuel() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    public ArrayList<EcolageNomPayeEtudiant> listeMoisActuel() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
 
     {
         ArrayList list =  null;
@@ -22,22 +25,33 @@ public class EcolageNomPayeEtudiant {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<EcolageNomPayeEtudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres","andrianjaka");
             stmt = connection.createStatement();
-            rs = stmt.executeQuery("select EcolageEtudiant.id id,Etudiant.etu etu,Etudiant.idpromotion idprom,Promotion.nom nomP,(niveau.ecolage - EcolageEtudiant.montant) reste,date_part("+"'month'"+",now()) mois,date_part("+"'year'"+",now()) annee,EcolageEtudiant.idNiveau idN,niveau.nom niv from EcolageEtudiant join Etudiant on EcolageEtudiant.idEtudiant = Etudiant.id join niveau on Etudiant.idNiveau = niveau.id join Promotion on Promotion.id = Etudiant.idpromotion");
-            
+           
+            String sql = "select etu,idecolage,idniveau,idpromotion,promotion,niveau_etudiant,date_part('month',now()) mois,date_part('year',now()) annee,(ecolage_aPaye-montant) reste from sommeEcolage_Paye";
+            rs = stmt.executeQuery(sql);
             while(rs.next())
             {
                 EcolageNomPayeEtudiant enp = new EcolageNomPayeEtudiant();
 
                 enp.setAnnee(Integer.parseInt(rs.getString("annee")));
                 enp.setEtu(rs.getString("etu"));
-                enp.setId(rs.getInt("id"));
-                enp.setIdN(rs.getInt("idN"));
-                enp.setIdProm(rs.getInt("idprom"));
+                enp.setId(rs.getInt("idecolage"));
+                enp.setIdN(rs.getInt("idniveau"));
+                enp.setIdProm(rs.getInt("idpromotion"));
                 enp.setMois(Integer.parseInt(rs.getString("mois")));
-                enp.setNiv(rs.getString("niv"));
-                enp.setNomP(rs.getString("nomP"));
+                enp.setNiv(rs.getString("niveau_etudiant"));
+                enp.setNomP(rs.getString("promotion"));
+
+                //transformation
+                // String reste = rs.getString("reste");
+                // String [] split = reste.substring(1,reste.length()-1).split(",");
+                // String value ="";
+                // for(int i=0;i<split.length;i++)
+                // {
+                //     value = value + split[i];
+                // }
+                
                 enp.setReste(rs.getFloat("reste"));
 
                 list.add(enp);
@@ -59,47 +73,47 @@ public class EcolageNomPayeEtudiant {
 
 
     
-    ArrayList<EcolageNomPayeEtudiant> liste(String id,String annee,String mois,String prom) throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
-    {
-        ArrayList list =  null;
-        Connection connection = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        try {
-            Class.forName("org.postgresql.Driver").newInstance();
-            list =  new ArrayList<EcolageNomPayeEtudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
-            stmt = connection.createStatement();
-            String sql = "select*from (select EcolageEtudiant.id id,Etudiant.etu etu,Etudiant.idpromotion idprom,Promotion.nom nomP,(niveau.ecolage - EcolageEtudiant.montant) reste,date_part('month',EcolageEtudiant.datee) mois,date_part('year',EcolageEtudiant.datee) annee,EcolageEtudiant.idNiveau idN,niveau.nom niv from EcolageEtudiant join Etudiant on EcolageEtudiant.idEtudiant = Etudiant.id join niveau on Etudiant.idNiveau = niveau.id join Promotion on Promotion.id = Etudiant.idpromotion) as liste where liste.idN ="+ id +" and liste.annee ="+annee+" and liste.mois="+mois+" and liste.nomP='"+prom+"'";
-            rs = stmt.executeQuery(sql);
-            while(rs.next())
-            {
-                EcolageNomPayeEtudiant enp = new EcolageNomPayeEtudiant();
+    // public ArrayList<EcolageNomPayeEtudiant> liste(String id,String annee,String mois,String prom) throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    // {
+    //     ArrayList list =  null;
+    //     Connection connection = null;
+    //     Statement stmt = null;
+    //     ResultSet rs = null;
+    //     try {
+    //         Class.forName("org.postgresql.Driver").newInstance();
+    //         list =  new ArrayList<EcolageNomPayeEtudiant>();
+    //         connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres","andrianjaka");
+    //         stmt = connection.createStatement();
+    //         String sql = "select*from (select EcolageEtudiant.id id,Etudiant.etu etu,Etudiant.idpromotion idprom,Promotion.nom nomP,(niveau.ecolage - EcolageEtudiant.montant) reste,date_part('month',EcolageEtudiant.datee) mois,date_part('year',EcolageEtudiant.datee) annee,EcolageEtudiant.idNiveau idN,niveau.nom niv from EcolageEtudiant join Etudiant on EcolageEtudiant.idEtudiant = Etudiant.id join niveau on Etudiant.idNiveau = niveau.id join Promotion on Promotion.id = Etudiant.idpromotion) as liste where liste.idN ="+ id +" and liste.annee ="+annee+" and liste.mois="+mois+" and liste.nomP='"+prom+"'";
+    //         rs = stmt.executeQuery(sql);
+    //         while(rs.next())
+    //         {
+    //             EcolageNomPayeEtudiant enp = new EcolageNomPayeEtudiant();
 
-                enp.setAnnee(Integer.parseInt(rs.getString("annee")));
-                enp.setEtu(rs.getString("etu"));
-                enp.setId(rs.getInt("id"));
-                enp.setIdN(rs.getInt("idN"));
-                enp.setIdProm(rs.getInt("idprom"));
-                enp.setMois(Integer.parseInt(rs.getString("mois")));
-                enp.setNiv(rs.getString("niv"));
-                enp.setNomP(rs.getString("nomP"));
-                enp.setReste(rs.getFloat("reste"));
+    //             enp.setAnnee(Integer.parseInt(rs.getString("annee")));
+    //             enp.setEtu(rs.getString("etu"));
+    //             enp.setId(rs.getInt("id"));
+    //             enp.setIdN(rs.getInt("idN"));
+    //             enp.setIdProm(rs.getInt("idprom"));
+    //             enp.setMois(Integer.parseInt(rs.getString("mois")));
+    //             enp.setNiv(rs.getString("niv"));
+    //             enp.setNomP(rs.getString("nomP"));
+    //             enp.setReste(rs.getFloat("reste"));
 
-                list.add(enp);
-            }
+    //             list.add(enp);
+    //         }
 
-        } catch (Exception e) {
-            //TODO: handle exception
-            throw e;
-        }finally{
-            rs.close();
-            stmt.close();
-            connection.close();
-        }
+    //     } catch (Exception e) {
+    //         //TODO: handle exception
+    //         throw e;
+    //     }finally{
+    //         rs.close();
+    //         stmt.close();
+    //         connection.close();
+    //     }
             
-        return list;
-    }
+    //     return list;
+    // }
 
 
 
@@ -158,3 +172,5 @@ public class EcolageNomPayeEtudiant {
         return reste;
     }
 }
+
+

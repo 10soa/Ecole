@@ -1,3 +1,4 @@
+package mpianatra;
 import java.sql.Date;
 import java.sql.*;
 import java.util.*;
@@ -14,7 +15,7 @@ public class Etudiant {
     Date dateNaissance;
 
 
-    ArrayList<Etudiant> getEtudiant() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    public ArrayList<Etudiant> getEtudiant() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
     {
 
         ArrayList list =  null;
@@ -24,7 +25,7 @@ public class Etudiant {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<Etudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres","andrianjaka");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select*from Etudiant"); 
             while(rs.next())
@@ -58,31 +59,31 @@ public class Etudiant {
 
 
     
-    public void insertEcolage(String annee, String mois,String date,String montant,String niv,String id) throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
-    {
+    // public void insertEcolage(String annee, String mois,String date,String montant,String niv,String id) throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    // {
 
-        ArrayList list =  null;
-        Connection connection = null;
-        Statement stmt = null;
-        String sql = null;
-        try {
-            Class.forName("org.postgresql.Driver").newInstance();
-            list =  new ArrayList<Etudiant>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
-            stmt = connection.createStatement();
-            sql = "insert into EcolageEtudiant (id,idetudiant,montant,datee,mois,annee,idniveau) values (nextval('eco'),"+ id +","+montant+",'"+date+"',"+mois+","+annee+","+niv+")";
+    //     ArrayList list =  null;
+    //     Connection connection = null;
+    //     Statement stmt = null;
+    //     String sql = null;
+    //     try {
+    //         Class.forName("org.postgresql.Driver").newInstance();
+    //         list =  new ArrayList<Etudiant>();
+    //         connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","tp","secret");
+    //         stmt = connection.createStatement();
+    //         sql = "insert into Ecolage (id,idetudiant,montant,datee,mois,annee,idniveau) values (nextval('eco'),"+ id +","+montant+",'"+date+"',"+mois+","+annee+","+niv+")";
             
-            stmt.execute(sql); 
+    //         stmt.execute(sql); 
 
-        } catch (Exception e) {
-            //TODO: handle exception
-            throw e;
-        } finally{
+    //     } catch (Exception e) {
+    //         //TODO: handle exception
+    //         throw e;
+    //     } finally{
             
-            stmt.close();
-            connection.close();
-        }
-    }
+    //         stmt.close();
+    //         connection.close();
+    //     }
+    // }
 
 
     public void setAdresse(String adresse) {

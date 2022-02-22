@@ -1,3 +1,4 @@
+package direction;
 import java.sql.*;
 import java.util.*;
 
@@ -6,7 +7,7 @@ public class Niveau {
     String nom;
     float ecolage;
 
-    ArrayList<Niveau> getNiv() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
+    public ArrayList<Niveau> getNiv() throws ClassNotFoundException,SQLException,InstantiationException,IllegalAccessException
     {
 
         ArrayList list =  null;
@@ -16,7 +17,7 @@ public class Niveau {
         try {
             Class.forName("org.postgresql.Driver").newInstance();
             list =  new ArrayList<Niveau>();
-            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres"," ");
+            connection = DriverManager.getConnection( "jdbc:postgresql://localhost/"+"ecole","postgres","andrianjaka");
             stmt = connection.createStatement();
             rs = stmt.executeQuery("select*from Niveau"); 
             while(rs.next())
