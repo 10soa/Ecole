@@ -1,5 +1,5 @@
 
-psql -U postgres -d ecole -f D:\ITU\S3\PROJETS5S3\Ecole\7Mars\script_ecole.sql
+-- psql -U postgres -d ecole -f D:\ITU\S3\PROJETS5S3\Ecole\7Mars\script_ecole.sql
 CREATE SEQUENCE adminseq;
 CREATE SEQUENCE classement;
 CREATE SEQUENCE "drop";
@@ -139,58 +139,6 @@ CREATE TABLE etudiantcorbeille (
     CONSTRAINT pk_etudiantcorbeille PRIMARY KEY (id),
     CONSTRAINT unq_etudiantcorbeille_idetudiant UNIQUE (idetudiant)
 );
-
-
--- CREATE TABLE examen ();
-
-
-
-
-
-
-
-
-
-
--- ALTER TABLE etudiant
--- ADD CONSTRAINT fk_etudiant1_ecolageetudiant FOREIGN KEY (id) REFERENCES ecolageetudiant(idetudiant);
--- ALTER TABLE etudiant
--- ADD CONSTRAINT fk_etudiant1_note FOREIGN KEY (id) REFERENCES note(idetudiant);
--- ALTER TABLE etudiant
--- ADD CONSTRAINT fk_etudiant_classementnote FOREIGN KEY (id) REFERENCES classementnote(idetu);
--- ALTER TABLE etudiant
--- ADD CONSTRAINT fk_etudiant_etudiantcorbeille FOREIGN KEY (id) REFERENCES etudiantcorbeille(idetudiant);
--- ALTER TABLE matiere
--- ADD CONSTRAINT fk_matiere_note FOREIGN KEY (id) REFERENCES note(idmatiere);
--- ALTER TABLE niveau
--- ADD CONSTRAINT fk_niveau_etudiant1 FOREIGN KEY (id) REFERENCES etudiant(idniveau);
--- ALTER TABLE niveau
--- ADD CONSTRAINT fk_niveau_ecolageetudiant FOREIGN KEY (id) REFERENCES ecolageetudiant(idniveau);
--- ALTER TABLE niveau
--- ADD CONSTRAINT fk_niveau_matiere FOREIGN KEY (id) REFERENCES matiere(idniveau);
--- ALTER TABLE niveau
--- ADD CONSTRAINT fk_niveau_classementnote FOREIGN KEY (id) REFERENCES classementnote(idniveau);
--- ALTER TABLE note
--- ADD CONSTRAINT fk_note_notevalide FOREIGN KEY (id) REFERENCES notevalide(idnote);
--- ALTER TABLE promotion
--- ADD CONSTRAINT fk_promotion_etudiant1 FOREIGN KEY (id) REFERENCES etudiant(idpromotion);
--- ALTER TABLE promotion
--- ADD CONSTRAINT fk_promotion_classementnote FOREIGN KEY (id) REFERENCES classementnote(idpromotion);
-
--- ALTER TABLE promotion DROP CONSTRAINT fk_promotion_classementnote;
--- ALTER TABLE promotion DROP CONSTRAINT fk_promotion_etudiant1;
-
--- ALTER TABLE etudiant DROP CONSTRAINT fk_etudiant1_ecolageetudiant;
--- ALTER TABLE etudiant DROP CONSTRAINT fk_etudiant1_note;
--- ALTER TABLE etudiant DROP CONSTRAINT fk_etudiant_classementnote;
--- ALTER TABLE etudiant DROP CONSTRAINT fk_etudiant_etudiantcorbeille;
-
--- ALTER TABLE niveau DROP CONSTRAINT fk_niveau_etudiant1;
--- ALTER TABLE niveau DROP CONSTRAINT fk_niveau_ecolageetudiant;
--- ALTER TABLE niveau DROP CONSTRAINT fk_niveau_matiere;
--- ALTER TABLE niveau DROP CONSTRAINT fk_niveau_classementnote;
-
--- ALTER TABLE note DROP CONSTRAINT fk_note_notevalide;
 
 
 CREATE OR REPLACE VIEW detailetudiant AS
