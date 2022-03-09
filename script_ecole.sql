@@ -151,7 +151,7 @@ SELECT e.id idetudiant,e.nom,
     p.id idpromotion,
     p.nom as promotion,
     p.statut prom_statut,
-    n.id idniveau,
+    n.id idNiveau,
     n.nom as niveau
 FROM etudiant e
     join promotion p on p.id = e.idpromotion
